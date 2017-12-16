@@ -34,7 +34,7 @@ THE SOFTWARE.
 
 #if defined(__GNUC__)
 #if defined(__APPLE__) && defined(__MACH__)
-#	define executable_extension ""
+#	define executable_extension ".js"
 #	define LF_program ""
 #	define LF_shared " -fPIC -mmacosx-version-min=10.4" \
                      " -dynamiclib" \
@@ -70,7 +70,7 @@ THE SOFTWARE.
 #   define LF_combine_libs ""
 
 #else
-#	define executable_extension ""
+#	define executable_extension ".js"
 #	define LF_program " -Wl,--export-dynamic "
 #	define LF_shared " -fPIC -shared"
 #	define LF_shared_name  " -Wl,-soname,"
@@ -108,7 +108,7 @@ void print_header(void) {
     "#define NEED_STRSEP\n\n"
 #endif
     
-    "#define shared_extension \"" shared_extension "\"\n"
+    "#define shared_extension \".wasm\"\n"
     "\n// EOF \n#endif // PLATFORM_H_\n");
 }
 

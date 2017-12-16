@@ -162,17 +162,17 @@ $(SRC_DIR)/platform.h: $(OSTOOL)
 
 $(SRC_DIR)/CSOM: $(CSOM_OBJ)
 	@echo Linking CSOM
-	$(CC) $(LDFLAGS) `$(OSTOOL) l`\
+	$(CC) -s MAIN_MODULE=1 -s WASM=1 --pre-js pre-test.js $(LDFLAGS) `$(OSTOOL) l`\
 		-o `$(OSTOOL) x "$(CSOM_NAME)"` \
 		$(CSOM_OBJ) $(CSOM_LIBS) 
 	@echo CSOM done.
 
 CORE: $(SRC_DIR)/CSOM $(PRIMITIVES_OBJ)
 	@echo Linking SOMCore lib
-	$(CC) $(LDFLAGS) `$(OSTOOL) l "$(CORE_NAME)"` \
+	$(CC) -s SIDE_MODULE=1 -s WASM=1 $(LDFLAGS) `$(OSTOOL) l "$(CORE_NAME)"` \
 		-o `$(OSTOOL) s "$(CORE_NAME)"`\
 		$(PRIMITIVES_OBJ) $(CORE_LIBS)
-	mv `$(OSTOOL) s "$(CORE_NAME)"` $(ST_DIR)
+	mv "$(CORE_NAME).wasm" $(ST_DIR)
 	@touch CORE
 	@echo SOMCore done.
 
