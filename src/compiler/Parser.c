@@ -228,7 +228,7 @@ void skipComment(void);
 void getsym(void);
 void peek(void);
 bool symIn(Symbol* ss);
-bool accept(Symbol s);
+bool acceptXXX(Symbol s);
 bool acceptOneOf(Symbol* ss);
 bool expect(Symbol s);
 bool expectOneOf(Symbol* ss);
@@ -551,7 +551,7 @@ bool symIn(Symbol* ss) {
 }
 
 
-bool accept(Symbol s) {
+bool acceptXXX(Symbol s) {
     if(sym == s) {
         getsym();
         return true;
@@ -573,7 +573,7 @@ bool acceptOneOf(Symbol* ss) {
 
 
 bool expect(Symbol s) {
-    if(accept(s))
+    if(acceptXXX(s))
         return true;
     fprintf(stderr, "Error: unexpected symbol. Expected %s, but found %s", 
             symnames[s], symnames[sym]);
@@ -676,7 +676,7 @@ void Parser_classdef(class_generation_context* cgenc) {
     
     if(sym == Identifier) {
         cgenc->super_name = Universe_symbol_for(text);
-        accept(Identifier);
+        acceptXXX(Identifier);
     } else
         cgenc->super_name = Universe_symbol_for("Object");
     
@@ -702,7 +702,7 @@ void Parser_classdef(class_generation_context* cgenc) {
         method_genc_release(&mgenc);
     }
     
-    if(accept(Separator)) {
+    if(acceptXXX(Separator)) {
         cgenc->class_side = true;
         classFields(cgenc);
         while(sym == Identifier || sym == Keyword || sym == OperatorSequence ||
@@ -730,7 +730,7 @@ void Parser_classdef(class_generation_context* cgenc) {
 
 
 void instanceFields(class_generation_context* cgenc) {
-    if(accept(Or)) {
+    if(acceptXXX(Or)) {
         while(sym == Identifier) {
             char* var = variable();
             SEND(cgenc->instance_fields, add, Universe_symbol_for(var));
@@ -742,7 +742,7 @@ void instanceFields(class_generation_context* cgenc) {
 
 
 void classFields(class_generation_context* cgenc) {
-    if(accept(Or)) {
+    if(acceptXXX(Or)) {
         while(sym == Identifier) {
             char* var = variable();
             SEND(cgenc->class_fields, add, Universe_symbol_for(var));
@@ -843,17 +843,17 @@ pVMSymbol unarySelector(void) {
 pVMSymbol binarySelector(void) {
     pVMSymbol symb = Universe_symbol_for(text);
     
-    if(accept(Or))
+    if(acceptXXX(Or))
         ;
-    else if(accept(Comma))
+    else if(acceptXXX(Comma))
         ;
-    else if(accept(Minus))
+    else if(acceptXXX(Minus))
         ;
-    else if(accept(Equal))
+    else if(acceptXXX(Equal))
         ;
     else if(acceptOneOf(singleOpSyms))
         ;
-    else if(accept(OperatorSequence))
+    else if(acceptXXX(OperatorSequence))
         ;
     else
         expect(NONE);
@@ -864,7 +864,7 @@ pVMSymbol binarySelector(void) {
 
 char* identifier(void) {
     char* s = internal_allocate_string(text);
-    if(accept(Primitive))
+    if(acceptXXX(Primitive))
         ; // text is set
     else
         expect(Identifier);
@@ -887,7 +887,7 @@ char* argument(void) {
 
 
 void blockContents(method_generation_context* mgenc) {
-    if(accept(Or)) {
+    if(acceptXXX(Or)) {
         locals(mgenc);
         expect(Or);
     }
@@ -905,7 +905,7 @@ void locals(method_generation_context* mgenc) {
 
 
 void blockBody(method_generation_context* mgenc, bool seen_period) {
-    if(accept(Exit))
+    if(acceptXXX(Exit))
         result(mgenc);
     else if(sym == EndBlock) {
         if(seen_period)
@@ -924,7 +924,7 @@ void blockBody(method_generation_context* mgenc, bool seen_period) {
         mgenc->finished = true;
     } else {
         expression(mgenc);
-        if(accept(Period)) {
+        if(acceptXXX(Period)) {
             emit_POP(mgenc);
             blockBody(mgenc, true);
         }
@@ -939,7 +939,7 @@ void result(method_generation_context* mgenc) {
     else
         emit_RETURN_LOCAL(mgenc);
     mgenc->finished = true;
-    accept(Period);
+    acceptXXX(Period);
 }
 
 

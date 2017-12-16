@@ -37,7 +37,7 @@ THE SOFTWARE.
 #	define executable_extension ""
 #	define LF_program ""
 #	define LF_shared " -fPIC -mmacosx-version-min=10.4" \
-                     " -undefined dynamic_lookup -dynamiclib" \
+                     " -dynamiclib" \
                      " -Wl,-single_module -Wl,-Y,1455 "
 #	define LF_shared_name  " -install_name "
 #   define LF_combine_objects ""
@@ -70,7 +70,12 @@ THE SOFTWARE.
 #   define LF_combine_libs ""
 
 #else
-#    error "no currently supported platform"
+#	define executable_extension ""
+#	define LF_program " -Wl,--export-dynamic "
+#	define LF_shared " -fPIC -shared"
+#	define LF_shared_name  " -Wl,-soname,"
+#   define LF_combine_objects ""
+#   define LF_combine_libs ""
 /*# APPLE/linux/bsd/win32/sun */
 #endif
 #else
@@ -78,7 +83,7 @@ THE SOFTWARE.
 /*#  defined(__GNUC__) */
 #endif
 
-#define shared_extension ".csp"
+#define shared_extension ".js"
 
 void print_header(void) {
     printf(

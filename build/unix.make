@@ -148,7 +148,7 @@ clobber: $(OSTOOL) clean
 	rm -f $(SRC_DIR)/platform.h
 
 $(OSTOOL): $(BUILD_DIR)/ostool.c
-	$(CC) -g -Wno-endif-labels -o $(OSTOOL) $(BUILD_DIR)/ostool.c
+	cc -g -Wno-endif-labels -o $(OSTOOL) $(BUILD_DIR)/ostool.c
 
 $(SRC_DIR)/platform.h: $(OSTOOL)
 	@($(OSTOOL) i >$(SRC_DIR)/platform.h)

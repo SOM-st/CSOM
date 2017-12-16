@@ -1,3 +1,18 @@
+WebAssembly CSOM
+----------------
+
+ - install [emscripten](http://kripken.github.io/emscripten-site/docs/getting_started/downloads.html)
+ - load core `git submodule update --init`
+ - build with: `emmake make clean && emmake make debug && emcc CSOM.bc -o CSOM.js -s MAIN_MODULE=1 --pre-js pre-test.js && emcc Smalltalk/SOMCore.bc -s SIDE_MODULE=1 -o Smalltalk/SOMCore.js`
+ - run with: `node CSOM.js`
+
+Known Issues
+------------
+
+ - not selectable in ostool, but hard coded WebAssembly target
+ - SOM tests not all passing
+ - only tested on macOS 10.12 Sierra
+
 CSOM - The Simple Object Machine implemented in C
 =================================================
 

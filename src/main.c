@@ -24,12 +24,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
   */
 
+#include <emscripten.h>
 #include <memory/gc.h>
 
 #include <vm/Universe.h>
 
 int main(int argc, char** argv) {
     printf("This is CSOM.\n");
+    EM_ASM(
+        FS.mkdir('/Smalltalk');
+        FS.mount(NODEFS, {
+			root: './core-lib/Smalltalk'
+		}, '/Smalltalk');
+        FS.mkdir('/TestSuite');
+        FS.mount(NODEFS, {
+			root: './core-lib/TestSuite'
+		}, '/TestSuite');
+    );
     
     int vm_argc = 0;    
     const char** vm_argv =

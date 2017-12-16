@@ -83,7 +83,7 @@ void pop_frame_and_push_result(pVMObject result) {
 }
 
 
-void send(pVMSymbol signature, pVMClass receiver_class) {
+void sendXXX(pVMSymbol signature, pVMClass receiver_class) {
     // Lookup the invokable with the given signature
     pVMObject invokable = (pVMObject)SEND(receiver_class,
                                           lookup_invokable, signature);
@@ -269,7 +269,7 @@ void do_send(int bytecode_index) {
         SEND(_FRAME, get_stack_element, number_of_arguments - 1);
 
     // Send the message
-    send(signature, SEND(receiver, get_class));
+    sendXXX(signature, SEND(receiver, get_class));
 }
 
 
