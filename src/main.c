@@ -40,6 +40,10 @@ int main(int argc, char** argv) {
         FS.mount(NODEFS, {
 			root: './core-lib/TestSuite'
 		}, '/TestSuite');
+        FS.mkdir('/Examples');
+        FS.mount(NODEFS, {
+			root: './core-lib/Examples'
+		}, '/Examples');
     );
     
     int vm_argc = 0;    

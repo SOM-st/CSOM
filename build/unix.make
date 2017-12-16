@@ -162,7 +162,7 @@ $(SRC_DIR)/platform.h: $(OSTOOL)
 
 $(SRC_DIR)/CSOM: $(CSOM_OBJ)
 	@echo Linking CSOM
-	$(CC) -s MAIN_MODULE=1 -s WASM=1 --pre-js pre-test.js $(LDFLAGS) `$(OSTOOL) l`\
+	$(CC) -s MAIN_MODULE=1 -s WASM=1 --pre-js pre-benchmarks.js $(LDFLAGS) `$(OSTOOL) l`\
 		-o `$(OSTOOL) x "$(CSOM_NAME)"` \
 		$(CSOM_OBJ) $(CSOM_LIBS) 
 	@echo CSOM done.
